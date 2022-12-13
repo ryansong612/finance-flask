@@ -171,7 +171,7 @@ def login():
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"],
                                                      request.form.get(
                                                          "password")):
-            return apology("invalid username and/or password")
+            return apology("Invalid username and/or password")
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -226,7 +226,7 @@ def register():
         if checks is not None:
             return checks
         if request.form.get("password") != request.form.get("confirmation"):
-            return apology("passwords must match")
+            return apology("Passwords must match")
         try:
             # Attempts to add user to database
             prim_key = db.execute(
@@ -234,9 +234,9 @@ def register():
                 username=request.form.get("username"),
                 hash=generate_password_hash(request.form.get("password")))
         except:
-            return apology("username already exists")
+            return apology("Username already exists")
         if prim_key is None:
-            return apology("registration error")
+            return apology("Registration error")
         session["user_id"] = prim_key
         redirect("/")
         return render_template("login.html")
